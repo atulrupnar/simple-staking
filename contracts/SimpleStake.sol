@@ -41,8 +41,6 @@ contract SimpleStaking {
     }
     function withdraw() external {
         UserInfo storage user = usersInfo[msg.sender];
-        user.rewardsAccured += user.amount * (block.timestamp - user.lastStakedTime);
-        user.lastStakedTime = block.timestamp;
         uint256 pendingRewards = getPendingRewards(msg.sender);
         IERC20(token).transfer(msg.sender, user.amount + pendingRewards);
         delete usersInfo[msg.sender];
